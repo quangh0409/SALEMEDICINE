@@ -1,0 +1,232 @@
+🧩 1. Yêu cầu chức năng (Functional Requirements)
+🏬 Quản lý sản phẩm (Product Management)
+
+CRUD sản phẩm: mã, tên, giá, đơn vị tính, tồn kho.
+
+Cho phép nhập hàng (nhập kho).
+
+Cho phép xuất hàng (bán hàng, trừ tồn).
+
+👥 Quản lý khách hàng (Customer Management)
+
+CRUD khách hàng: mã KH, họ tên, số điện thoại, email, địa chỉ.
+
+🧾 Quản lý hóa đơn / bán hàng (Invoice)
+
+Tạo hóa đơn bán hàng (có danh sách sản phẩm, số lượng, tổng tiền).
+
+Cho phép in hóa đơn / xuất PDF hoặc JSON.
+
+📦 Quản lý tồn kho (Inventory)
+
+Cập nhật tồn kho tự động sau mỗi giao dịch nhập / xuất.
+
+Xem danh sách sản phẩm tồn dưới ngưỡng cảnh báo.
+
+🖨️ Chuẩn bị tích hợp thiết bị ngoại vi
+
+Thiết kế backend & frontend dễ mở rộng cho:
+
+Máy quét mã vạch (barcode scanner).
+
+Máy in hóa đơn (POS printer).
+
+⚙️ 2. Backend yêu cầu kỹ thuật (NestJS + Oracle)
+
+Công nghệ:
+
+NestJS (TypeScript)
+
+TypeORM + Oracle Database
+
+Swagger cho tài liệu API
+
+Class-validator, Class-transformer
+
+DTO, Mapper pattern, Repository pattern
+
+Clean code theo SOLID principles
+
+src/
+├── main.ts
+├── app.module.ts
+├── common/
+│   ├── dto/
+│   ├── entities/
+│   ├── exceptions/
+│   ├── filters/
+│   └── interceptors/
+├── config/
+│   └── ormconfig.ts
+├── modules/
+│   ├── product/
+│   │   ├── product.controller.ts
+│   │   ├── product.service.ts
+│   │   ├── product.entity.ts
+│   │   ├── product.repository.ts
+│   │   ├── dto/
+│   │   └── mapper/
+│   ├── customer/
+│   ├── invoice/
+│   ├── inventory/
+│   └── auth/
+└── shared/
+    └── base/
+        ├── base.entity.ts
+        ├── base.service.ts
+        └── base.response.ts
+
+
+Mô hình cơ bản:
+
+BaseEntity: id, createdAt, updatedAt, createdBy, updatedBy
+
+ApiResponse<T>: chuẩn hóa response
+
+ExceptionFilter: xử lý lỗi tập trung
+
+LoggerInterceptor: log input/output
+
+Ví dụ API chính:
+
+POST /products/import
+
+POST /products/export
+
+GET /products
+
+POST /customers
+
+GET /invoices/:id
+
+POST /invoices/print
+
+Bảo mật & Mở rộng:
+
+Có module Auth (JWT + Guard + Role-based Access Control).
+
+Hỗ trợ Pagination, Filtering, Sorting.
+
+Viết README.md hướng dẫn chạy và test API bằng Postman hoặc Swagger.
+
+💻 3. Frontend yêu cầu kỹ thuật (ReactJS + TypeScript)
+
+Công nghệ:
+
+ReactJS (TypeScript)
+
+Vite hoặc Create React App
+
+TailwindCSS
+
+Axios (REST API client)
+
+React Router DOM
+
+Zustand hoặc Redux Toolkit (state management)
+
+shadcn/ui hoặc Material UI cho UI components
+
+src/
+├── api/
+│   └── axiosClient.ts
+├── components/
+│   ├── Layout/
+│   ├── Product/
+│   ├── Customer/
+│   ├── Invoice/
+│   └── Shared/
+├── pages/
+│   ├── Dashboard.tsx
+│   ├── Products.tsx
+│   ├── Customers.tsx
+│   ├── Sales.tsx
+│   └── Login.tsx
+├── store/
+│   ├── productStore.ts
+│   ├── customerStore.ts
+│   └── invoiceStore.ts
+├── utils/
+│   └── format.ts
+└── main.tsx
+
+
+Yêu cầu UI:
+
+Giao diện POS giống KiotViet / Sapo (đơn giản, trực quan).
+
+Có thanh menu trái (Sidebar):
+
+Dashboard
+
+Products
+
+Customers
+
+Sales / Invoices
+
+Trang Products:
+
+Bảng hiển thị sản phẩm (tên, mã, giá, tồn).
+
+Nút “Nhập hàng” và “Xuất hàng”.
+
+Trang Sales:
+
+Form chọn khách hàng, thêm sản phẩm, tính tổng tiền.
+
+Nút “In hóa đơn” (gọi API /invoices/print).
+
+Form có validation rõ ràng.
+
+4. Hướng dẫn chạy (AI cần sinh trong output)
+
+cd backend
+npm install
+npm run start:dev
+
+cd frontend
+npm install
+npm run dev
+
+Cấu hình kết nối API
+
+Trong frontend/src/api/axiosClient.ts
+
+const axiosClient = axios.create({
+  baseURL: 'http://localhost:3000/api',
+});
+
+5. Coding Standards & Output yêu cầu
+
+Code phải clean, có comment, dễ đọc, dễ mở rộng.
+
+Tách biệt rõ backend và frontend (2 folder độc lập).
+
+Backend phải chạy được thật với Oracle Database.
+
+Frontend kết nối thực qua Axios, có thể thao tác CRUD đầy đủ.
+
+Tự động sinh Swagger tại /api/docs.
+
+Có README.md hướng dẫn setup cả hai phần.
+
+Hãy sinh ra một hệ thống Fullstack POS mini (giống KiotViet / Sapo) gồm:
+
+Backend: NestJS + TypeScript + Oracle (TypeORM)
+
+Frontend: ReactJS + TypeScript + TailwindCSS
+
+Bao gồm đầy đủ:
+
+Kiến trúc module chuẩn (Product, Customer, Invoice, Inventory, Auth).
+
+Tất cả API CRUD, logic nhập/xuất hàng, in hóa đơn, quản lý khách hàng.
+
+UI tương tác trực quan, có form nhập liệu, bảng danh sách, xác nhận thao tác.
+
+Hướng dẫn chạy backend/frontend.
+
+Code phải theo chuẩn clean architecture, SOLID, comment rõ ràng, dễ mở rộng, production-ready.
+
+Hãy sinh ra mã nguồn hoàn chỉnh (cả backend và frontend) với cấu trúc thư mục, code chi tiết, file cấu hình và hướng dẫn chạy.
